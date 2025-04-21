@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import NoInternetWrapper from "@/components/resueable-components/NoInternetWrapper";
+import NextTopLoader from "nextjs-toploader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +30,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* This loader works on the Next.js <Link> component */}
+        <NextTopLoader
+          color="#25632D"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          zIndex={1600}
+        />
+        {/* This internet wrapper will only work when there is no internet connection */}
+        <NoInternetWrapper>{children}</NoInternetWrapper>
+        <Toaster position="top-right" />
       </body>
     </html>
   );
